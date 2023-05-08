@@ -3,33 +3,22 @@
     <v-card>
       <v-card-title> Prueba técnica: To-do list </v-card-title>
       <v-card-text>
-        <v-list>
-          <v-list-item
-            v-for="(item, index) in items"
-            :key="index"
-            :class="{ 'todo-done': item.done }"
-          >
-            <v-list-item-action>
-              <v-checkbox
-                :input-value="item.done"
-                @input="updateItem(index, $event)"
-              ></v-checkbox>
-            </v-list-item-action>
-            <v-list-item-content>
-              {{ item.text }}
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
       </v-card-text>
       <v-card-actions>
         <v-text-field
-          v-model="newItem"
+          v-model="newTask"
           label="Añadir una nueva tarea"
-          @keyup.enter="addItem"
+          @keyup.enter="addTask"
         ></v-text-field>
-        <v-btn @click="addItem">Crear</v-btn>
+        <v-btn @click="addTask">Crear</v-btn>
       </v-card-actions>
     </v-card>
+        <v-list>
+          <Task
+            v-for="(task, i) in $store.state.tasks"
+            :key = "i"
+            :task = "task" />
+        </v-list>
   </div>
 </template>
 
@@ -42,16 +31,15 @@ export default {
         { text: "Prueba a añadir tus propias tareas", done: true },
         { text: "También puedes eliminarlas y editarlas", done: false },
       ],
-      newItem: "",
+      newTask: "",
     };
   },
   methods: {
-    addItem() {
-      this.items.push({
-        text: this.newItem,
-        done: false,
-      });
-      this.newItem = "";
+    addTask() {
+      if (this.newTask) {
+        this.$store.commit("ADD_TASK", this.newTask)
+        this.newTask = ""
+      }
     },
     updateItem(index, done) {
       this.items[index].done = done;
