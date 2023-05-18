@@ -25,7 +25,7 @@ export const mutations = {
 export const actions = {
     async fetchTasks({ commit }) {
         try {
-            const response = await fetch('http://localhost:5000/tasks/get');
+            const response = await fetch('https://todolist-nuxt-vuetify.onrender.com/tasks/get');
             const tasks = await response.json();
             console.log(tasks)
             commit("SET_TASKS", tasks);
@@ -37,7 +37,7 @@ export const actions = {
     async addTask({ commit }, task) {
         console.log(task)
         try {
-            await fetch('http://localhost:5000/tasks/new-task', {
+            await fetch('https://todolist-nuxt-vuetify.onrender.com/tasks/new-task', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -57,7 +57,7 @@ export const actions = {
 
         try {
             
-            const response = await fetch(`http://localhost:5000/tasks/update/${task.id_task}`, {
+            const response = await fetch(`https://todolist-nuxt-vuetify.onrender.com/tasks/update/${task.id_task}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -74,7 +74,7 @@ export const actions = {
     async removeTask({ commit }, task) {
         console.log(task);
         try {
-            await fetch(`http://localhost:5000/tasks/delete/${task.id_task}`, {
+            await fetch(`https://todolist-nuxt-vuetify.onrender.com/tasks/delete/${task.id_task}`, {
                 method: 'DELETE',
             })
             commit('REMOVE_TASK', task)
